@@ -13,7 +13,8 @@ import {
   CLink,
   CModal,
   CModalBody,
-  CSpinner
+  CSpinner,
+  CInvalidFeedback
 } from "@coreui/react";
 import axios from "axios";
 
@@ -24,9 +25,41 @@ export default function UserManagementForm() {
     const [valName, setValName] = useState('');
     const [valUsername, setValUsername] = useState('');
     const [valPassword, setValPassword] = useState('');
+    const [validName, setValidName] = useState();
+    const [validUsername, setValidUsername] = useState();
+    const [validPassword, setValidPassword] = useState();
+
     const [loading, setLoading] = useState(false);
     const [modal, setModal] = useState(false);
     const [responseStatus, setResponseStatus] = useState('');
+
+    const validateName = (event) => {
+        const name = event.target.value.trim();
+        setValName(name)
+        if (name.length < 3) {
+            setValidName(false);
+        } else {
+            setValidName(true);
+        }
+    };
+    const validateUsername = (event) => {
+        const username = event.target.value.trim();
+        setValUsername(username)
+        if (username.length < 3) {
+            setValidUsername(false);
+        } else {
+            setValidUsername(true);
+        }
+    };
+    const validatePassword = (event) => {
+        const password = event.target.value.trim();
+        setValPassword(password)
+        if (password.length < 7) {
+            setValidPassword(false);
+        } else {
+            setValidPassword(true);
+        }
+    };
 
     const toggleModal = () =>{
         setModal(!modal);
@@ -52,8 +85,11 @@ export default function UserManagementForm() {
         }
         setModal(true);
         setValName('');
+        setValidName(false);
         setValUsername('');
+        setValidUsername(false);
         setValPassword('');
+        setValidPassword(false);
     };
 
     if (loading) {
@@ -75,23 +111,26 @@ export default function UserManagementForm() {
                     <CForm className="form-horizontal">
                     <CFormGroup>
                         <CLabel>Name</CLabel>
-                        <CInput type="text" name="name" value={valName} onChange={(e) => setValName(e.target.value)} />
+                        <CInput type="text" valid={validName} invalid={!validName} name="name" value={valName} onChange={validateName} />
+                        {validName ? '' : <CInvalidFeedback>Minimum 3 chars are required</CInvalidFeedback>}
                     </CFormGroup>
                     <CFormGroup>
                         <CLabel>Username</CLabel>
-                        <CInput type="text" name="username" value={valUsername} onChange={(e) => setValUsername(e.target.value)} />
+                        <CInput type="text" valid={validUsername} invalid={!validUsername} name="username" value={valUsername} onChange={validateUsername} />
+                        {validUsername ? '' : <CInvalidFeedback>Minimum 3 chars are required</CInvalidFeedback>}
                     </CFormGroup>
                     <CFormGroup>
                         <CLabel>Password</CLabel>
-                        <CInput type="password" name="password" value={valPassword} onChange={(e) => setValPassword(e.target.value)} />
+                        <CInput type="password" valid={validPassword} invalid={!validPassword} name="password" value={valPassword} onChange={validatePassword} />
+                        {validPassword ? '' : <CInvalidFeedback>Minimum 7 chars are required</CInvalidFeedback>}
                     </CFormGroup>
 
                     <div className="form-actions">
-                        <CButton onClick={submitHandler} color="primary" style={{marginRight: '1rem'}}>
+                        <CButton onClick={submitHandler} disabled={!validName || !validUsername || !validPassword} color="info" style={{marginRight: '1rem'}}>
                         Create
                         </CButton>
                         <CLink to="/user-management">
-                        <CButton color="secondary">Cancel</CButton>
+                        <CButton color="secondary" >Cancel</CButton>
                         </CLink>
                     </div>
                     </CForm>
