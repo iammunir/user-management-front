@@ -37,6 +37,8 @@ const Typography = React.lazy(() => import('./views/theme/typography/Typography'
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'));
 const Users = React.lazy(() => import('./views/users/Users'));
 const User = React.lazy(() => import('./views/users/User'));
+const UserManagement = React.lazy(() => import('./views/userManagement/UserManagement'));
+const UserManagementForm = React.lazy(() => import('./views/userManagement/UserManagementForm'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -78,7 +80,9 @@ const routes = [
   { path: '/notifications/toaster', name: 'Toaster', component: Toaster },
   { path: '/widgets', name: 'Widgets', component: Widgets },
   { path: '/users', exact: true,  name: 'Users', component: Users },
-  { path: '/users/:id', exact: true, name: 'User Details', component: User }
+  { path: '/users/:id', exact: true, name: 'User Details', component: User },
+  { path: '/user-management', exact: true, name: 'User Management', component: UserManagement },
+  { path: '/user-management/form', exact: true, name: 'User Management Form', component: UserManagementForm },
 ];
 
 export default routes;

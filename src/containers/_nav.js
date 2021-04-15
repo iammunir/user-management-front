@@ -14,6 +14,22 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavTitle',
+    _children: ['User']
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Users Management',
+    to: '/user-management',
+    icon: 'cilUser',
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Create User',
+    to: '/user-management/form',
+    icon: 'cilFile',
+  },
+  {
+    _tag: 'CSidebarNavTitle',
     _children: ['Theme']
   },
   {
